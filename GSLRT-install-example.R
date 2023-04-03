@@ -1,4 +1,4 @@
-# install.packages("https://github.com/j-g-b/gsLRT/archive/master.tar.gz", repos = NULL, type="source")
+ install.packages("https://github.com/j-g-b/gsLRT/archive/master.tar.gz", repos = NULL, type="source")
 
 
 require(magrittr)
