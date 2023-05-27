@@ -15,6 +15,9 @@ ME = as.data.frame(read.xlsx2(ME_path, sheetIndex = 1))
 AB = AB [ as.numeric(AB$p)<=0.1, ] 
 LT = LT [ as.numeric(LT$p)<=0.1, ] 
 ME = ME [ as.numeric(ME$p)<=0.1, ] 
+AB$GS =gsub( "_", " ", AB$GS)
+LT$GS =gsub( "_", " ", LT$GS)
+ME$GS =gsub( "_", " ", ME$GS)
 
 intersect(AB$GS, LT$GS) 
 intersect(LT$GS, ME$GS) 
