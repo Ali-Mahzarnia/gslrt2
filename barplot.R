@@ -51,7 +51,7 @@ library(GOplot)
    labs(x="Pathways", y="-Log10(p-value)",
         title="Gene Ontology (GO) molecular function pathways for Amyloid beta") +
    geom_hline(yintercept = 1)+
-   geom_text(aes(y=1.2, label="-log10(0.1)", x=2), colour="black", angle=0, vjust = 1)
+   geom_text(aes(y=1.2, label="-log10(0.1)", x=2), colour="black", angle=0, vjust = 1)+theme(text = element_text(size = 20))
  #geom_text(aes(x=200, label="the weak cars", y=20), colour="red", angle=90, vjust = -1, text=element_text(size=11))
  
 
@@ -69,7 +69,7 @@ ggplot(LT, aes(reorder(GS, -log10(p)), -log10(p), fill = Pvalue)) +
   labs(x="Pathways", y="-Log10(p-value)",
        title="Gene Ontology (GO) molecular function pathways for Log(Tangles)")+
   geom_hline(yintercept = 1)+
-  geom_text(aes(y=1.2, label="-log10(0.1)", x=2), colour="black", angle=0, vjust = 1)
+  geom_text(aes(y=1.2, label="-log10(0.1)", x=2), colour="black", angle=0, vjust = 1)+theme(text = element_text(size = 20))
 
 ggsave( "Log_tangles.pdf", plot = last_plot(), device='pdf', scale=1, width=20, height=10, unit=c("in"), dpi=200)
 
@@ -88,7 +88,7 @@ ggplot(ME, aes(reorder(GS, -log10(p)), -log10(p), fill = Pvalue)) +
   labs(x="Pathways", y="-Log10(p-value)",
        title="Gene Ontology (GO) molecular function pathways for MMSE")+
   geom_hline(yintercept = 1)+
-  geom_text(aes(y=1.5, label="-log10(0.1)", x=2), colour="black", angle=0, vjust = 1)
+  geom_text(aes(y=1.5, label="-log10(0.1)", x=2), colour="black", angle=0, vjust = 1)+theme(text = element_text(size = 20))
 
 
 ggsave( "MMSE.pdf", plot = last_plot(), device='pdf', scale=1, width=24, height=10, unit=c("in"), dpi=200)
