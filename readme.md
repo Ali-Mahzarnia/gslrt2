@@ -1,3 +1,13 @@
-To use the updated functionality of the gene set enrichment method, the original package must be installed from Github. Once installed, the next step is to run the "gslrt_debugged_2_normal.R" file on R. This file defines the "gslrt2" function, which is similar to the original "gslrt" function but has the added capability to accept a continuous variable for z, instead of just binary.
+# Gene Set Enrichment Method Update
 
-To clarify, the first line of the "GSLRT-install-example.R" file on Github provides instructions for installing the original package. Once that is completed, the "gslrt_debugged_2_normal.R" file should be run to define the "gslrt2" function. This updated function allows for the analysis of continuous variables in gene set enrichment studies and is a useful tool for investigating complex biological mechanisms.
+To utilize the enhanced functionality of the gene set enrichment method, you must first install the original package from GitHub. Follow these steps to get started:
+
+1-Install the Original Package:
+To begin, execute the instructions provided in the first line of the "GSLRT-install-example.R" file available on GitHub. This will install the required package.
+
+2-Run "gslrt_debugged_2_normal.R" on R:
+Once the original package is successfully installed, proceed to run the "gslrt_debugged_2_normal.R" file in the R environment. This file contains the definition of the "gslrt2" function.
+
+The "gslrt2" function is an improved version of the original "gslrt" function. It introduces the capability to handle continuous variables for "z" instead of being restricted to binary values. This enhanced feature allows for a more comprehensive analysis of continuous variables in gene set enrichment studies. In addition, it allows pathways detection only if part of that pathways' gene list is common with the input gene G.
+
+By employing the "gslrt2" function, researchers can explore complex biological mechanisms in gene set enrichment studies with greater accuracy and depth. Enjoy the benefits of this updated tool to gain valuable insights into gene set enrichment analysis involving continuous variables.
