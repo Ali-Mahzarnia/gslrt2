@@ -12,3 +12,5 @@ The "gslrt2" function is an improved version of the original "gslrt" function. I
 
 By employing the "gslrt2" function, researchers can explore complex biological mechanisms in gene set enrichment studies with greater accuracy and depth. Enjoy the benefits of this updated tool to gain valuable insights into gene set enrichment analysis involving continuous variables.
 The input and output folders contain the input and output of this software on an example.
+
+The "mediation.r" is used for mediation analysis.  
