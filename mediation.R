@@ -1,7 +1,7 @@
 require(magrittr)
 require(plyr)
 require(tidyverse)
-
+library(mediation)
 
 G=read.delim( "ROSMAP rnaseq matrix G.txt")
 names=colnames(G)
@@ -62,7 +62,8 @@ mediators = c( "CCDC88A"  ,  "PDCL3"  ,  "VEGFA"  , "DAB2IP"    , "ITGA5"   ,  "
 
 pvals= matrix(NA, 1, 8)
 data3 = as.data.frame(na.omit(cbind(Zab, G2,Zmmse )))
-
+summary =vector(mode = "list", length = 8)
+mediation_analysis = vector(mode = "list", length = 8)
 for (j in 1:8) {
   
 
@@ -84,16 +85,23 @@ data4 = as.data.frame(na.omit(cbind(Zab, med,Zmmse )))
  summary(model_full)
 
 
-mediation_analysis= mediate(model_m,model_full, treat = 'Zmmse', mediator ='med' , boot = T, sims = 1000 )
-summary  = summary(mediation_analysis) 
- pvals[j]= summary$d1.p
+mediation_analysis[[j]]= mediate(model_m,model_full, treat = 'Zmmse', mediator ='med' , boot = T, sims = 1000 )
+summary[[j]]  = summary(mediation_analysis[[j]]) 
+ pvals[j]= summary[[j]]$d1.p
 }
 
 
 pval_adj = p.adjust(pvals, method = "fdr")
 index_sig = which(pval_adj<0.05)
+plot(mediation_analysis[[index_sig]])
+summary[[index_sig]]
 
 
+
+
+
+summary =vector(mode = "list", length = 8)
+mediation_analysis = vector(mode = "list", length = 8)
 for (j in index_sig) {
   med = G2[,j]
   data4 = as.data.frame(na.omit(cbind(Zab, med,Zmmse )))
@@ -112,15 +120,15 @@ for (j in index_sig) {
   summary(model_full)
 
   
-  mediation_analysis= mediate(model_m,model_full, treat = 'Zmmse', mediator ='med' , boot = T, sims = 1000 )
-  summary  = summary(mediation_analysis) 
+  mediation_analysis[[j]]= mediate(model_m,model_full, treat = 'Zmmse', mediator ='med' , boot = T, sims = 1000 )
+  summary[[j]]  = summary(mediation_analysis[[j]])  
 }
 
 
-library(flexplot)
-visualize(model_full)
-
-mediate_plot(Zmmse~  med +Zab ,  data=data4)
+# library(flexplot)
+# visualize(model_full)
+# 
+# mediate_plot(Zmmse~  med +Zab ,  data=data4)
 
 
 
@@ -141,6 +149,10 @@ mediate_plot(Zmmse~  med +Zab ,  data=data4)
 pvals2= matrix(NA, 1, 8)
 data32 = as.data.frame(na.omit(cbind(Ztau, G2,Zmmse )))
 
+
+
+summary2 =vector(mode = "list", length = 8)
+mediation_analysis2 = vector(mode = "list", length = 8)
 for (j in 1:8) {
   
   
@@ -162,15 +174,20 @@ for (j in 1:8) {
   summary(model_full)
   
   
-  mediation_analysis2= mediate(model_m,model_full, treat = 'Zmmse', mediator ='med' , boot = T, sims = 1000 )
-  summary2  = summary(mediation_analysis2) 
-  pvals2[j]= summary2$d1.p
+  mediation_analysis2[[j]]= mediate(model_m,model_full, treat = 'Zmmse', mediator ='med' , boot = T, sims = 1000 )
+  summary2[[j]]  = summary(  mediation_analysis2[[j]] ) 
+  pvals2[j]= summary2[[j]]$d1.p
 }
+
+
+
+
 
 
 pval_adj2 = p.adjust(pvals2, method = "fdr")
 index_sig = which(pval_adj2<0.05)
-
+plot(mediation_analysis2[[index_sig]])
+summary2[[index_sig]]
 
 for (j in index_sig) {
   # j=5
@@ -221,4 +238,27 @@ partial_cor = ppcor::pcor( G2 )
  min(partial_cor$p.value[lower.tri( partial_cor$p.value, diag = F ) ])
 max( abs( partial_cor$estimate[lower.tri( partial_cor$estimate, diag = F ) ]))
  
- 
+# library(ggdag)
+# 
+# tidy_ggdag <- dagify(
+#   MMSE ~ Tau_or_Ab + g,
+#   g ~ Tau_or_Ab,
+#   exposure = "Tau_or_Ab", 
+#   outcome = "g"
+# ) %>%
+#   tidy_dagitty()
+# ggdag(tidy_ggdag) +
+#   theme_dag()
+
+
+
+library(diagram)
+library(diagram)
+data <- c(0, "", 0,
+          0, 0, 0, 
+          "", "", 0)
+M<- matrix (nrow=3, ncol=3, byrow = TRUE, data=data)
+plot<- plotmat (M, pos=c(1,2), 
+                name= c( expression(g^j),  expression(paste("Tau or A",beta)), "MMSE"), 
+                box.type = "rect", box.size = 0.12, box.prop=0.5,  curve=0)
+ggsave( "Mediation.pdf", plot = plot, device='pdf', scale=1, width=24, height=10, unit=c("in"), dpi=200)
